@@ -6,8 +6,8 @@ $(document).ready(function($) {
 		data: {"limit":'811'},
 	})
 	.done(function(data){
-		console.log(data);
-		console.log(data.results[1].name);
+		console.log("Datos si está ok"+ data);
+		console.log (data);
 	})
 	.fail(function(){
 		console.log("Error");
@@ -20,7 +20,7 @@ $(document).ready(function($) {
 function pokeSubmit(){
     var param = document.getElementById("pokeInput").value;
     console.log(param);
-    var pokeURL = "http://pokeapi.co/api/v2/pokemon/" + param;
+    var pokeURL = "http://pokeapi.co/api/v1/pokemon/" + param;
     console.log(pokeURL);
 
     // new URL for 3rd GET request
@@ -34,11 +34,21 @@ function pokeSubmit(){
         var pokeName = data.name;
         console.log (pokeName); //Hasta aquí va bien, me muestra el ID y nombre en la consola
         var pokeSprite = data.sprites.front_default;
-        console.log (pokeSprite);
+        console.log (pokeSprite); //Me muestra link imagen ok
+        var pokeheight = data.height;
+        console.log("altura"+pokeheight);
+        var pokeweight = data.weight;
+        console.log ("peso"+pokeweight);
+        var poketypes = data.types;
+        poketypes.forEach(function(e){
+        	console.log (e.type.name); //Me muestra los tipos que tiene ok
+        });
+        console.log("tipo"+poketypes);
         var t = "<div class='elemento'><img src='" + pokeSprite + "'/><h2>"+pokeName+"</h2>"
-		document.getElementById("elementos").innerHTML = t;
+		document.getElementById("elementos").innerHTML = t; //Muestro datos en html
 
         var pokeType1 = data.types[0].name;
+        console.log (pokeType1);
         if (data.types.length == 2) {
             var pokeType2 = data.types[1].name;
         }
@@ -49,6 +59,7 @@ function pokeSubmit(){
         $.getJSON(descriptionURI, function(data2){
             //console.log(data2);
             pokeDescription = data2.description;
+            console.log (pokeDescription);
         });
 
         // 3rd GET request to get an image
