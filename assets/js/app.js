@@ -3,7 +3,7 @@ $(document).ready(function() {
 		url: 'http://pokeapi.co/api/v2/pokemon',
 		type: 'GET',
 		datatype: 'JSON',
-		data: {"limit":'811'},
+		data: {"limit":'10'},
 
 	})
 
@@ -11,8 +11,8 @@ $(document).ready(function() {
 		//console.log("Datos si está ok"+ data);
 		//console.log (data.results);
 		//Funciona lento pero muestra todo
-		/*
-		LO DEJÉ COMENTADO PORQUE CARGA LENTO
+		
+		//LO DEJÉ COMENTADO PORQUE CARGA LENTO
 		var resultados = data.results;
 		resultados.forEach(function(e){
 			//console.log (e.name);
@@ -24,7 +24,7 @@ $(document).ready(function() {
 			});
 
 		})
-	})*/
+	})
 	.fail(function(){
 		console.log("Error");
 	})
@@ -34,7 +34,7 @@ $(document).ready(function() {
 });
 
 var armarTemplate = function(nombre,url){
-		var t = "<div class='elemento col-lg-2'><img src='" + url + "'/><h3>"+ nombre +"</h3></div>";
+		var t = "<div class='elemento col-lg-2 text-center'><img src='" + url + "'/><h6>"+ nombre +"</h6></div>";
 		return t;
 	}
 	// Se demora en buscar pero muestra
@@ -48,6 +48,10 @@ var armarTemplate = function(nombre,url){
 		console.log (url);
 			$.getJSON(url, function(data){
 			var pokeName = data.name;
+			//$("#myModalLabel").val(pokeName); //No me funciona :(
+			document.getElementById('myModalLabel').innerHTML = pokeName;
+			document.getElementById('modal-body').innerHTML = "<img src='" + pokeSprite + "'/>";
+
 	        console.log (pokeName); //Hasta aquí va bien, me muestra el ID y nombre en la consola
 	        var pokeSprite = data.sprites.front_default;
 	        console.log (pokeSprite); //Me muestra link imagen ok
@@ -63,7 +67,10 @@ var armarTemplate = function(nombre,url){
 	           console.log(data2.flavor_text_entries[3].flavor_text); //Muestra descripción en español
 	           console.log(data2.genera[2].genus); //Muestra categoria
 			}) //Cierra URL2
-	        var t = "<div class='elemento'><img src='" + pokeSprite + "'/><h2>"+pokeName+"</h2>"
+
+
+
+			var t = "<div class='elemento'><h2>"+pokeName+"</h2>"
 			document.getElementById("elementos").innerHTML = t; //Muestro datos en html
 			});
 		});

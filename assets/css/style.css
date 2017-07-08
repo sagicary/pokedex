@@ -12,10 +12,17 @@
 }
 
 #elementos{
-	margin: 5px;
+	margin: 2px;
+	padding: 2px;
+	text-align: center;
+}
+
+.elemento{
+	margin: 2px;
 	border: 2px solid #c0c5ce;
 	display: inline-block;
-	padding: 5px;
-	text-align: left;
+	text-align: center;
 	position: relative;
+	padding-left: 0px;
+	padding-right: 0px;
 }
