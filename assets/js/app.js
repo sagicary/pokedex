@@ -47,32 +47,9 @@ function pokeSubmit(){
         var t = "<div class='elemento'><img src='" + pokeSprite + "'/><h2>"+pokeName+"</h2>"
 		document.getElementById("elementos").innerHTML = t; //Muestro datos en html
 
-    $.getJSON(pokeURL3, function(data4){
-           console.log(data4.flavor_text_entries[3].flavor_text); //Muestra descripción en español
-	})
-        // 3rd GET request to get an image
-        $.getJSON(pokeURL, function(data3){
-            console.log("datos"+data3);
-            
-        console.log (data3.descriptions);
-        var descriptionURI = "http://pokeapi.co" + data3.descriptions[0].resource_uri;
-        console.log(descriptionURI);
-        var pokeDescription = "";
-
-        $.getJSON(descriptionURI, function(data2){
-            //console.log(data2);
-            pokeDescription = data2.description;
-            console.log (pokeDescription);
-        });
-            /*
-            console.log("Number: ", pokeID);
-            console.log("Name: ", pokeName);
-            console.log("Type 1: ", pokeType1);
-            console.log("Type 2: ", pokeType2);
-            console.log("Description URI: ", descriptionURI);
-            console.log("Description: ", pokeDescription);
-            */
-        });
-
-    });	// 2nd and 3rd GET requests are nested in success function of 1st GET request
-}
+	    $.getJSON(pokeURL3, function(data4){
+	           console.log(data4.flavor_text_entries[3].flavor_text); //Muestra descripción en español
+	           console.log(data4.genera[2].genus);
+		}) //Cierra pokeURL3
+    }) // Cierra pokeURL2
+};	// Cierra funcion pokeSubmit
