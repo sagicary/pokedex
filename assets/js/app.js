@@ -22,12 +22,13 @@ function pokeSubmit(){
     console.log(param);
     var pokeURL = "http://pokeapi.co/api/v1/pokemon/" + param;
     console.log(pokeURL);
-
     // new URL for 3rd GET request
     var pokeURL2 = "http://pokeapi.co/api/v2/pokemon/" + param;
     console.log(pokeURL2);
 
-    $.getJSON(pokeURL2, function(data){
+    var pokeURL3 ="http://pokeapi.co/api/v2/pokemon-species/" + param;
+
+    $.getJSON(pokeURL2, function(data){ //pido del 2 porque tiene las imagenes
         console.log(data);
         var pokeID = data.id; 
         console.log (pokeID); 
@@ -36,24 +37,26 @@ function pokeSubmit(){
         var pokeSprite = data.sprites.front_default;
         console.log (pokeSprite); //Me muestra link imagen ok
         var pokeheight = data.height;
-        console.log("altura"+pokeheight);
+        console.log("altura "+pokeheight);
         var pokeweight = data.weight;
-        console.log ("peso"+pokeweight);
+        console.log ("peso "+pokeweight);
         var poketypes = data.types;
         poketypes.forEach(function(e){
         	console.log (e.type.name); //Me muestra los tipos que tiene ok
         });
-        console.log("tipo"+poketypes);
         var t = "<div class='elemento'><img src='" + pokeSprite + "'/><h2>"+pokeName+"</h2>"
 		document.getElementById("elementos").innerHTML = t; //Muestro datos en html
 
-        var pokeType1 = data.types[0].name;
-        console.log (pokeType1);
-        if (data.types.length == 2) {
-            var pokeType2 = data.types[1].name;
-        }
-        else var pokeType2 = null;
-        var descriptionURI = "http://pokeapi.co" + data.descriptions[0].resource_uri;
+    $.getJSON(pokeURL3, function(data4){
+           console.log(data4.flavor_text_entries[3].flavor_text); //Muestra descripción en español
+	})
+        // 3rd GET request to get an image
+        $.getJSON(pokeURL, function(data3){
+            console.log("datos"+data3);
+            
+        console.log (data3.descriptions);
+        var descriptionURI = "http://pokeapi.co" + data3.descriptions[0].resource_uri;
+        console.log(descriptionURI);
         var pokeDescription = "";
 
         $.getJSON(descriptionURI, function(data2){
@@ -61,11 +64,6 @@ function pokeSubmit(){
             pokeDescription = data2.description;
             console.log (pokeDescription);
         });
-
-        // 3rd GET request to get an image
-        $.getJSON(pokeURL2, function(data3){
-            console.log(data3);
-            console.log(JSON.stringify(data, null, "  "));
             /*
             console.log("Number: ", pokeID);
             console.log("Name: ", pokeName);
