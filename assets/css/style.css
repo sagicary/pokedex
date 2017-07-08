@@ -10,15 +10,12 @@
 	max-width: 100px;
 	padding: 4px;
 }
+
 #elementos{
-	padding: 2%;
-}
-#elementos .elemento{
 	margin: 5px;
 	border: 2px solid #c0c5ce;
 	display: inline-block;
 	padding: 5px;
 	text-align: left;
 	position: relative;
-	margin: 2%;
 }

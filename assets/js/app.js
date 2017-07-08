@@ -10,8 +10,11 @@ $(document).ready(function() {
 	.done(function(data){
 		//console.log("Datos si está ok"+ data);
 		//console.log (data.results);
-		var hola = data.results;
-		hola.forEach(function(e){
+		//Funciona lento pero muestra todo
+		/*
+		LO DEJÉ COMENTADO PORQUE CARGA LENTO
+		var resultados = data.results;
+		resultados.forEach(function(e){
 			//console.log (e.name);
 			//console.log (e.url);
 			$.getJSON(e.url, function(data){
@@ -19,9 +22,9 @@ $(document).ready(function() {
         		//console.log (pokeSprite); //Me muestra link imagen ok
         		$("#elementos").append(armarTemplate(e.name , pokeSprite));
 			});
+
 		})
-		
-	})
+	})*/
 	.fail(function(){
 		console.log("Error");
 	})
@@ -31,9 +34,40 @@ $(document).ready(function() {
 });
 
 var armarTemplate = function(nombre,url){
-		var t = "<div class='elemento col-lg-3'><img src='" + url + "'/><h3>"+ nombre +"</h3></div>";
+		var t = "<div class='elemento col-lg-2'><img src='" + url + "'/><h3>"+ nombre +"</h3></div>";
 		return t;
 	}
+	// Se demora en buscar pero muestra
+	$("#buscar-pokemon").click(function(event){
+		console.log("Entro");
+		$("#elementos").empty();
+		var buscar = $("#pokeInput").val();
+		var url = "http://pokeapi.co/api/v2/pokemon/" + buscar;
+		var url2 = "http://pokeapi.co/api/v2/pokemon-species/" + buscar;
+		console.log (buscar);
+		console.log (url);
+			$.getJSON(url, function(data){
+			var pokeName = data.name;
+	        console.log (pokeName); //Hasta aquí va bien, me muestra el ID y nombre en la consola
+	        var pokeSprite = data.sprites.front_default;
+	        console.log (pokeSprite); //Me muestra link imagen ok
+	        var pokeheight = data.height;
+	        console.log("altura "+pokeheight);
+	        var pokeweight = data.weight;
+	        console.log ("peso "+pokeweight);
+	        var poketypes = data.types;
+	        poketypes.forEach(function(e){
+        	console.log (e.type.name); //Me muestra los tipos que tiene ok
+        	});
+        	$.getJSON(url2, function(data2){
+	           console.log(data2.flavor_text_entries[3].flavor_text); //Muestra descripción en español
+	           console.log(data2.genera[2].genus); //Muestra categoria
+			}) //Cierra URL2
+	        var t = "<div class='elemento'><img src='" + pokeSprite + "'/><h2>"+pokeName+"</h2>"
+			document.getElementById("elementos").innerHTML = t; //Muestro datos en html
+			});
+		});
+
 /*
 //Probando info encontrada en: http://pokeapi-how.appspot.com/page5
 function pokeSubmit(){
